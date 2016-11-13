@@ -1,0 +1,32 @@
+diff --git a/cpu/native/Makefile.native b/cpu/native/Makefile.native
+index ad76c84..c2bc35c 100755
+--- a/cpu/native/Makefile.native
++++ b/cpu/native/Makefile.native
+@@ -3,20 +3,20 @@ CONTIKI_CPU_DIRS = . net dev
+ CONTIKI_SOURCEFILES += mtarch.c rtimer-arch.c elfloader-stub.c watchdog.c eeprom.c
+ 
+ ### Compiler definitions
+-CC       ?= gcc
++CC       ?= aarch64-poky-linux-gcc
+ ifdef LD_OVERRIDE
+   LD     = $(LD_OVERRIDE)
+ else
+-  LD     = gcc
++  LD     = aarch64-poky-linux-gcc
+ endif
+-AS       ?= as
+-NM       ?= nm
+-OBJCOPY  ?= objcopy
+-STRIP    ?= strip
++AS       ?= aarch64-poky-linux-as
++NM       ?= aarch64-poky-linux-nm
++OBJCOPY  ?= aarch64-poky-linux-objcopy
++STRIP    ?= aarch64-poky-linux-strip
+ ifdef WERROR
+ CFLAGSWERROR=-Werror -pedantic -std=c99 -Werror
+ endif
+-CFLAGSNO = -Wall -g -I/usr/local/include $(CFLAGSWERROR)
++CFLAGSNO = -Wall -g -I usr/include $(CFLAGSWERROR)
+ CFLAGS  += $(CFLAGSNO) -O
+ 
+ ifeq ($(HOST_OS),Darwin)

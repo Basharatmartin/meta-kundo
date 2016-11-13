@@ -1,0 +1,49 @@
+# Recipe created by recipetool
+# This is the basis of a recipe and may need further editing in order to be fully functional.
+# (Feel free to remove these comments when editing.)
+#
+# WARNING: the following LICENSE and LIC_FILES_CHKSUM values are best guesses - it is
+# your responsibility to verify that the values are complete and correct.
+#
+# NOTE: multiple licenses have been detected; if that is correct you should separate
+# these in the LICENSE value using & if the multiple licenses all apply, or | if there
+# is a choice between the multiple licenses. If in doubt, check the accompanying
+# documentation to determine which situation is applicable.
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=b2276b027815460f098d51494e2ff4f1 \
+                    file://examples/6lbr/debian/copyright;md5=6e71195bfae56938b538a297bb538d6e \
+                    file://cpu/mc1322x/COPYING;md5=df2272309d457ec035644cba0e60ae6a \
+                    file://tools/z1/license-bsl.txt;md5=330e480c6d4ca4bf46d8fb758e742569 \
+                    file://tools/z80/hex2bin/LICENSE.txt;md5=209d78b936c32602c63d12b6f29050d6 \
+                    file://tools/cooja/lib/SWINGX_LICENSE;md5=a35b3bdf8ae76192b0c3100b42688cf4 \
+                    file://tools/cooja/lib/JDOM_LICENSE;md5=00bf6bfb676122faa3ed639e06091efd \
+                    file://tools/cooja/lib/LOG4J_LICENSE;md5=f4ce41a6d1028498fcacde12f589bce7 \
+                    file://tools/cooja/lib/JSYNTAXPANE_LICENSE;md5=c8f932f32f9658a70eeea7f0763f9c7b \
+                    file://tools/coffee-manager/LICENSE;md5=d90e3b02ffebdc9a2e0f3ba570d72181"
+
+SRC_URI = "git://github.com/cetic/6lbr.git"
+
+DEPENDS ="bridge-utils ncurses"
+# Modify these as desired
+PV = "1.0+git${SRCPV}"
+SRCREV = "${AUTOREV}"
+
+S = "${WORKDIR}/git/examples/6lbr"
+
+# NOTE: no Makefile found, unable to determine what needs to be done
+
+#do_configure () {
+# Specify any needed configure commands here
+#       :
+#}
+
+do_compile () {
+        # Specify compilation commands here
+        oe_runmake all tools plugins   
+}
+
+#do_install () {
+#       # Specify install commands here
+#       :
+#}
+

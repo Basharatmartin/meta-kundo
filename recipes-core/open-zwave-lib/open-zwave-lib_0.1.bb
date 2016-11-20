@@ -38,7 +38,8 @@ do_install () {
 	install -m 0755 ${S}/MinOZW ${D}${bindir}/
 	install -m 0755 ${S}/ozw_config ${D}${bindir}/
 	install -m 0755 ${S}/libopenzwave.so.1.4 ${D}${libdir}/
-	ln -sn ${D}${libdir}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
+	install -m 0755 ${S}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
+	#ln -sn ${D}${libdir}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
 
 	cp -r ${S}/config/* ${D}${sysconfdir}/openzwave/
 

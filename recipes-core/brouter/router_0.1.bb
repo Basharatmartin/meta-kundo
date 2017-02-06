@@ -32,7 +32,7 @@ inherit systemd
 SYSTEMD_PACKAGES = "router"
 SYSTEMD_SERVICE_${PN} = "6lbr.service"
 
-#SYSROOT="/opt/yocto/poky/build-odroid/tmp/sysroots/odroid-c2"
+# SYSROOT="/opt/yocto/poky/build-odroid/tmp/sysroots/odroid-c2"
 #PKG_CONFIG_SYSROOT_DIR="${SYSROOT}"
 #PKG_CONFIG_LIBDIR="${SYSROOT}/usr/lib/pkgconfig"
 #PKGCONFIG="${PKG_CONFIG_SYSROOT_DIR} ${PKG_CONFIG_LIBDIR}"

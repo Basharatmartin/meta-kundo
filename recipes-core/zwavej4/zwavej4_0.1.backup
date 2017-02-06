@@ -1,0 +1,51 @@
+# 6lbr border router recipe for yocto compiled image for Odroid C2
+# Created: Basharat Martin
+# Date: 14.11.2016
+#
+
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=d15a25c00014e4b6d8250230ac3a293e"
+
+SRC_URI = "git://github.com/zgmnkv/zwave4j.git"
+SRC_URI += "file://gradle.properties \
+	    file://build.gradle	 \
+	   "
+
+# Modify these as desired
+#PV = "1.0+git${SRCPV}"
+#SRCREV = "${AUTOREV}"
+
+SRCREV ?= "10a4abb455f88dcefdf5b3b0794f45796949776b"
+
+S = "${WORKDIR}/git"
+PV = "1.0+git${SRCPV}"
+
+#INSANE_SKIP_${JPN} += "dev-so"
+
+
+#RDEPENDS_${PN} = "java2-runtime"
+
+#inherit java-library
+
+do_compile_append () {
+    # Ugly but don't complain to me, but upstream ;-)
+    #	sed -e 's,bin/javah,bin/gjavah,g' \
+    #        -e 's,bin/jar,bin/fastjar,g'
+
+	# export Gcc="${CC}"
+	cp ${WORKDIR}/gradle.properties .
+	# brew install gradle
+	# gradle wrapper
+	# cp ${WORKDIR}/build.gradle .
+	./gradlew build
+
+}
+
+# FILES_${JPN} += "${libdir_jni}"
+# RPROVIDES_${JPN} = "${PN}"
+# RCONFLICTS_${JPN} = "${PN}"
+# RREPLACES_${JPN} = "${PN}"
+
+# FILES_${PN}-dbg += "${libdir_jni}/.debug"
+# BBCLASSEXTEND = "native"
+# RPROVIDES_${PN} += "java2-development"

@@ -1,0 +1,54 @@
+# Runtime recipe for yocto compiled image for Odroid C2
+# Created: Basharat Martin
+# Date: 23.12.2016
+#
+
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=b2276b027815460f098d51494e2ff4f1"
+PR = "r0"
+SRCREV ?= "b90502609da0209ede28adece0fde9cc809bc911"
+
+#SRC_URI = "git://gitolite@redmine.kundoxt.de:/runtime.git;protocol=ssh"
+#SRC_URI = "file://runtime.tar.tgz"
+SRC_URI += "file://abc.txt \
+	    file://runtime.tar.tgz \
+	   "
+
+#RUNTIME_VER= "1.0"
+
+#inherit insane
+#inherit bin_package
+
+#PV = "${RUNTIME_VER}+git${SRCPV}"
+
+#S = "${WORKDIR}/git"
+S = "${WORKDIR}"
+
+#INSANE_SKIP_${PN} = "already-stripped"
+#INSANE_SKIP_${PN} = "installed-vs-shipped"
+#INSANE_SKIP_${PN} += "pkgconfig pn-overrides split-strip already-stripped"
+
+#INHIBIT_PACKAGE_STRIP = "1"  
+
+#do_populate_sysroot[noexec] = "1"
+do_unpack[noexec] = "1"
+
+
+do_install () {
+	
+	install -d ${D}${libdir}/runtime
+	install -m 0755 ${S}/abc.txt ${D}${libdir}/runtime/
+
+
+	#cp ${S}/runtime.tar.tgz ${D}${libdir}/runtime/
+	#cp ${WORKDIR}/abc.txt ${D}${libdir}/runtime/
+	###tar cvf ${D}${libdir}/runtime/runtime.tar.tgz ${S}/*
+
+
+}
+
+FILES_${PN} = " ${libdir} \
+		${libdir}/runtime \
+	    "
+

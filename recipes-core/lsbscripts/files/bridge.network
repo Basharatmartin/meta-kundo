@@ -1,0 +1,7 @@
+[Match]
+Name=br*
+
+
+[Network]
+DHCP=yes
+

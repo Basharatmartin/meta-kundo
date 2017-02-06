@@ -1,0 +1,21 @@
+[Unit]
+SourcePath=/etc/init.d/lte_log
+Description=LSB: LOGGING THE LTE
+Before=multi-user.target
+Before=shutdown.target
+After=log.service
+Conflicts=shutdown.target
+
+[Service]
+Type=forking
+Restart=on-failure
+TimeoutSec=5min
+IgnoreSIGPIPE=no
+KillMode=process
+GuessMainPID=no
+RemainAfterExit=yes
+ExecStart=/etc/init.d/lte_log start
+ExecStop=/etc/init.d/lte_log stop
+
+[Install]
+WantedBy=multi-user.target

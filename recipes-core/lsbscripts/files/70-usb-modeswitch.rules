@@ -1,0 +1,10 @@
+# custom udev rules for UMTS modems
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="14fe", RUN+="/usr/sbin/usb_modeswitch -v 12d1 -p 14fe -M '55534243123456780000000000000011062000000100000000000000000000'"
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="1f01", RUN+="/usr/sbin/usb_modeswitch -v 12d1 -p 1f01 -J -R -W"
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="1506", RUN+="/bin/bash echo 12d1 1506 > /sys/bus/usb-serial/drivers/generic/new_id"
+
+ACTION=="add", SUBSYSTEM=="tty*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="brouter"
+SUBSYSTEMS=="scsi*", ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="1506", SUBSYSTEM=="block"
+ACTION=="add", SUBSYSTEM=="tty*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="mbus"
+ACTION=="add", SUBSYSTEM=="tty*", ATTRS{idVendor}=="0658", ATTRS{idProduct}=="0200", SYMLINK+="zwave"
+

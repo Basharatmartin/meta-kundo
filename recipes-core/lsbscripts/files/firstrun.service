@@ -1,0 +1,20 @@
+
+[Unit]
+SourcePath=/etc/init.d/firstrun
+Description=LSB: PLEASE DO NOT INTERRUPT THE FIRST BOOT
+After=network.target
+
+[Service]
+Type=simple
+Restart=no
+TimeoutSec=5min
+IgnoreSIGPIPE=no
+KillMode=process
+GuessMainPID=no
+RemainAfterExit=no
+ExecStart=/etc/init.d/firstrun start
+ExecStop=/etc/init.d/firstrun stop
+
+[Install]
+WantedBy=multi-user.target
+

@@ -11,23 +11,15 @@ SRC_URI[md5sum] = "f2f6c51af1ef731f3215a4b4492addf1"
 PR = "r0"
 
 BRANCH ?= "1.4.6"
-<<<<<<< HEAD
 #SRCREV ?= "b48d900e861b9bc002f29eaf99e66d29a1495d77"
 SRCREV ?= "c286b148bc0ea951f8e383818930ec9194c2bdca"
-=======
-SRCREV ?= "b48d900e861b9bc002f29eaf99e66d29a1495d77"
->>>>>>> ytram
 
 SRC_URI = "git://github.com/OpenZWave/open-zwave.git"
 
 
 ZWAVE_VER = "1.0"
 
-<<<<<<< HEAD
 DEPENDS ="libmicrohttpd udev"
-=======
-DEPENDS ="libmicrohttpd"
->>>>>>> ytram
 
 S = "${WORKDIR}/git"
 PV = "${BRANCH}+git${SRCPV}"
@@ -47,13 +39,8 @@ do_install () {
 	install -m 0755 ${S}/MinOZW ${D}${bindir}/
 	install -m 0755 ${S}/ozw_config ${D}${bindir}/
 	install -m 0755 ${S}/libopenzwave.so.1.4 ${D}${libdir}/
-<<<<<<< HEAD
 	#cp ${S}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
 	ln -sn ${D}${libdir}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
-=======
-	install -m 0755 ${S}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
-	#ln -sn ${D}${libdir}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
->>>>>>> ytram
 
 	cp -r ${S}/config/* ${D}${sysconfdir}/openzwave/
 
@@ -65,11 +52,3 @@ FILES_${PN} += " \
 		${sysconfdir}/openzwave \
 		"
 
-<<<<<<< HEAD
-=======
-
-
-
-
-
->>>>>>> ytram

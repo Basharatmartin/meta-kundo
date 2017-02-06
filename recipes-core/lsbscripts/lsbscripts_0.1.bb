@@ -12,7 +12,6 @@ SRC_URI += "file://init-functions \
 	    file://init-functions.d/20-left-info-blocks \
 	    file://init-functions.d/40-systemd \
 	    file://cpufrequtils \
-<<<<<<< HEAD
 	    file://wired.network \
 	    file://bridge.network \
 	    file://usbnet.network \
@@ -23,13 +22,10 @@ SRC_URI += "file://init-functions \
 	    file://lte_log \
 	    file://lte_log.service \
 	    file://70-usb-modeswitch.rules \
-=======
->>>>>>> ytram
 	   "
 
 S = "${WORKDIR}"
 
-<<<<<<< HEAD
 inherit systemd	
 SYSTEMD_PACKAGES = "lsbscripts"
 SYSTEMD_SERVICE_${PN} = "firstrun.service lte_log.service"
@@ -70,28 +66,12 @@ do_install () {
 	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc3.d/S90firstrun
 	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc4.d/S90firstrun
 	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc5.d/K90firstrun
-=======
-do_install () {
-	install -d ${D}${sysconfdir}/init.d
-	install -d ${D}${base_libdir}/lsb
-	install -d ${D}${base_libdir}/lsb/init-functions.d
-
-	install -m 0755 ${S}/cpufrequtils ${D}${sysconfdir}/init.d/
-	install -m 0755 ${S}/init-functions ${D}${base_libdir}/lsb/
-	install -m 0755 ${S}/init-functions.d/20-left-info-blocks ${D}${base_libdir}/lsb/init-functions.d/
-	install -m 0755 ${S}/init-functions.d/40-systemd ${D}${base_libdir}/lsb/init-functions.d/
-	
->>>>>>> ytram
 }
 
 FILES_${PN} += " \
 		${base_libdir}/lsb	\
 		${base_libdir}/lsb/init-functions.d \
 		"
-<<<<<<< HEAD
 #INITSCRIPT_PACKAGES = "lsbscripts"
 #INITSCRIPT_NAME = "firstrun"
 #INITSCRIPT_PARAMS = "defaults"
-=======
-
->>>>>>> ytram

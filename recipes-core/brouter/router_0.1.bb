@@ -29,7 +29,7 @@ INSANE_SKIP_${PN} = "already-stripped"
 
 inherit update-rc.d update-alternatives
 
-#SYSROOT="/opt/yocto/poky/build-odroid/tmp/sysroots/odroid-c2"
+# SYSROOT="/opt/yocto/poky/build-odroid/tmp/sysroots/odroid-c2"
 #PKG_CONFIG_SYSROOT_DIR="${SYSROOT}"
 #PKG_CONFIG_LIBDIR="${SYSROOT}/usr/lib/pkgconfig"
 #PKGCONFIG="${PKG_CONFIG_SYSROOT_DIR} ${PKG_CONFIG_LIBDIR}"

@@ -32,6 +32,7 @@ On Debian / Ubuntu
 	(in this way, you can use the recipes from kundoxt e.g runtime, brouter/router, zwave etc)
 	
 9.	MACHINE=qemuarm bitbake core-image-minimal (If everything goes fine, you can see an SDcard image in the folder ./tmp/deploy/images/ )
+10.	runqemu qemuarm core-image-minimal (run the image)
 
 	
 

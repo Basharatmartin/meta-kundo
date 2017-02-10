@@ -1,0 +1,13 @@
+[Unit]
+Description=mosquitto_service
+
+
+[Service]
+Type=forking
+ExecStart=/etc/init.d/mosquitto start
+ExecStop=/etc/init.d/mosquitto stop
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

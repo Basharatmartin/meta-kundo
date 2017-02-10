@@ -1,0 +1,13 @@
+[Unit]
+Description=mongod_service
+
+
+[Service]
+Type=forking
+ExecStart=/etc/init.d/mongod start
+ExecStop=/etc/init.d/mongod stop
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

@@ -19,18 +19,19 @@ On Debian / Ubuntu
 
 * Prepare things for Yocto Qemu Image
 
-2.	sudo install -o $(id -u) -g $(id -g) -d /opt/yocto
-3.	cd /opt/yocto 
-4.	git clone --branch (morty or Krogoth) git://git.yoctoproject.org/poky
-5.	cd /opt/yocto/poky
-6.	git clone --branch ytram https://github.com/Basharatmartin/meta-kundo.git (recipes by KundoXT)
-7.	source oe-init-build-env qemuarm
+1.	sudo install -o $(id -u) -g $(id -g) -d /opt/yocto
+2.	cd /opt/yocto 
+3.	git clone --branch (morty or Krogoth) git://git.yoctoproject.org/poky
+4.	cd /opt/yocto/poky
+5.	git clone --branch ytram https://github.com/Basharatmartin/meta-kundo.git (recipes by KundoXT)
+6.	source oe-init-build-env qemuarm
 
-8. 	cd /opt/yocto/poky/qemuarm
-9.	add the following line into the file ./conf/bblayers.conf
+7. 	cd /opt/yocto/poky/qemuarm
+8.	add the following line into the file ./conf/bblayers.conf
 	/opt/yocto/poky/meta-kundo \ 
 	(in this way, you can use the recipes from kundoxt e.g runtime, brouter/router, zwave etc)
 	
+9.	MACHINE=qemuarm bitbake core-image-minimal (If everything goes fine, you can see an SDcard image in the folder ./tmp/deploy/images/ )
 
 	
 

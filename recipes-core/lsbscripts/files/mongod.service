@@ -1,5 +1,4 @@
 [Unit]
-<<<<<<< HEAD
 Description=Mongodb
 After=mosquitto.service network.target
 #Before=basecon.service
@@ -15,16 +14,6 @@ ExecStartPre=/bin/mkdir -p /var/lib/mongodb
 ExecStart=/usr/bin/mongod $DAEMON_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStop=/bin/kill -HUP $MAINPID
-=======
-Description=mongod_service
-
-
-[Service]
-Type=forking
-ExecStart=/etc/init.d/mongod start
-ExecStop=/etc/init.d/mongod stop
-Restart=on-failure
->>>>>>> 344ad9ff483c5a7c4fa539817c05c9fda9173f19
 
 [Install]
 WantedBy=multi-user.target

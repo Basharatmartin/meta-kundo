@@ -20,12 +20,12 @@ S = "${WORKDIR}/git"
 # DEPENDS = "expect"
 RDEPENDS_marty ?= "expect bash"
 
-inherit useradd
+# inherit useradd
 # inherit extrausers
 
-USERADD_PACKAGES = "${PN}"
-GROUPADD_PARAM_${PN} = "-g 880 sudo"
-USERADD_PARAM_${PN} = "-u 1200 -G dialout -G sudo -N -m -d /home/marty -r -s /bin/bash -P 'martymarty' marty"
+# USERADD_PACKAGES = "${PN}"
+# GROUPADD_PARAM_${PN} = "-g 880 sudo"
+# USERADD_PARAM_${PN} = "-u 1200 -G dialout -G sudo -N -m -d /home/marty -r -s /bin/bash -P 'martymarty' marty"
 # USERADD_PARAM_${PN} = "-u 1000 -d /home/marty -s /bin/bash marty"
 # USERMOD_PARAM_${PN} += "-aG sudo marty \
 #			-aG dialout marty \	
@@ -45,31 +45,30 @@ do_install () {
 
 	install -d -m 755 ${D}/home/
 	install -d -m 755 ${D}/home/marty
-	install -d -m 755 ${D}/home/marty/runtime
+	install -d -m 755 ${D}/home/marty/runtime_rel
 	# install -d ${D}${base_libdir}/lsb
 	#install -m 0755 ${S}/abc.txt ${D}${base_libdir}/lsb/
 	#cp ${S}/marty.tar.gz ${D}${base_libdir}/lsb/
 	#install -m 0666 ${S}/marty.tar.gz ${D}${base_libdir}/lsb/
 	# tar czvf ${D}${base_libdir}/lsb/marty.tar.gz ./.
 	# tar czvf ${D}/home/marty/marty.tar.gz ./.
-	cp -r ./. ${D}/home/marty/runtime/
+	cp -r ./. ${D}/home/marty/runtime_rel/
 	#cp ./.gitignore ${D}/home/marty/runtime/.gitignore
-	rm ${D}/home/marty/runtime/lib/native/librxtxSerial.so
-	rm ${D}/home/marty/runtime/lib/native/librxtxSerial-2.2pre1.so
+	rm ${D}/home/marty/runtime_rel/lib/native/librxtxSerial.so
+	rm ${D}/home/marty/runtime_rel/lib/native/librxtxSerial-2.2pre1.so
 	chown -R marty:marty ${D}/home/marty
 	
 }
 
 FILES_${PN} += " \
-		#${base_libdir}/lsb	\
-		/home/marty/runtime/*	\
-		/home/marty/runtime/.git/*	\
-		/home/marty/runtime/.settings/*	\
-		/home/marty/runtime/.idea/*	\
-		/home/marty/runtime/.gitignore	\
-		/home/marty/runtime/.classpath	\
-		/home/marty/runtime/.project	\
-		/home/marty/runtime/.factorypath	\
-		/home/marty/runtime/.idea/.name	\
+		/home/marty/runtime_rel/*		\
+		/home/marty/runtime_rel/.git/*		\
+		/home/marty/runtime_rel/.settings/*	\
+		/home/marty/runtime_rel/.idea/*		\
+		/home/marty/runtime_rel/.gitignore	\
+		/home/marty/runtime_rel/.classpath	\
+		/home/marty/runtime_rel/.project	\
+		/home/marty/runtime_rel/.factorypath	\
+		/home/marty/runtime_rel/.idea/.name	\
 		"
 

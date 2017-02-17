@@ -220,6 +220,25 @@ do_expand_rootfs() {
 	return 0
 } # do_expand_rootfs
 
+create_ssh_host_keys (){
+	/usr/bin/ssh-keygen -t dsa -N "" -f /etc/ssh/ssh_host_dsa_key &&
+	/usr/bin/ssh-keygen -t rsa -N "" -f /etc/ssh/ssh_host_rsa_key &&
+	/usr/bin/ssh-keygen -t ecdsa -N "" -f /etc/ssh/ssh_host_ecdsa_key &&
+	/usr/bin/ssh-keygen -t ed25519 -N "" -f /etc/ssh/ssh_host_ed25519_key
+}
+
+set_locales_keymaps (){
+	/usr/bin/localectl set-keymap de &&
+	/usr/sbin/usermod -aG sudo marty &&
+	/usr/sbin/usermod -aG dialout marty &&
+	/bin/echo 'export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH' >> /home/marty/.bashrc &&
+	##/bin/echo 'export PROMPT_COMMAND='echo -e "\e[?16;0;300c"'' >> /home/marty/.bashrc
+	PROMPT_COMMAND='echo -e "\e[?16;0;300c"'
+	/bin/echo $PROMPT_COMMAND >> /home/marty/.bashrc &&
+	/bin/echo '%sudo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+}
+
 check_prerequisits() {
 	for needed_tool in fdisk parted partprobe resize2fs ; do
 		which ${needed_tool} >/dev/null 2>&1 || exit 1
@@ -237,6 +256,8 @@ main() {
 	fi
 	
 	/tmp/create_swap.sh &
+	create_ssh_host_keys
+	set_locales_keymaps
 
 	# old distros can't handle allow-hotplug
 	if [[ "$DISTRIBUTION" == "wheezy" || "$DISTRIBUTION" == "trusty"  ]]; then

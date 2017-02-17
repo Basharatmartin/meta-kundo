@@ -5,8 +5,8 @@ USER_NAME=$(id -u -n)
 
 # Create the file for log
 
-LOG_PATH=/home/$USER_NAME/lte_log.log
-PID_PATH=/home/$USER_NAME/lte_log.pid
+LOG_PATH=/home/marty/lte_log.log
+PID_PATH=/home/marty/lte_log.pid
 device_id="12d1:14dc"
 
 start (){
@@ -32,12 +32,12 @@ start (){
 						break
 					fi
 				fi
-				sleep 2
+				sleep 5m
 			done
 		else
 			echo "$(date) | Failed :: Not connected" >> $LOG_PATH
 		fi
-		sleep 10
+		sleep 10m
 	done &
 	echo "$!" > $PID_PATH
 	#echo $PID_PATH

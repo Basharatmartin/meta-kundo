@@ -30,6 +30,8 @@ SRC_URI += "file://init-functions \
 	    file://mongodb.env \
 	    file://mongodb.conf \
 	    file://70-usb-modeswitch.rules \
+	    file://mongod \
+	    file://mongod.service \
 	   "
 
 S = "${WORKDIR}"
@@ -37,9 +39,13 @@ RDEPENDS_lsbscripts ?= "bash"
 
 inherit systemd	
 SYSTEMD_PACKAGES = "lsbscripts"
+<<<<<<< HEAD
 SYSTEMD_SERVICE_${PN} = "firstrun.service lte_log.service ssh.service	\
 			 rsmb.service mongod.service			\
 			"
+=======
+SYSTEMD_SERVICE_${PN} = "firstrun.service lte_log.service mongod.service"
+>>>>>>> 344ad9ff483c5a7c4fa539817c05c9fda9173f19
 
 do_install () {
 	install -d ${D}${sysconfdir}/init.d
@@ -59,13 +65,18 @@ do_install () {
 	install -m 0755 ${S}/reboot ${D}${sysconfdir}/init.d/
 	install -m 0755 ${S}/resize2fs ${D}${sysconfdir}/init.d/
 	install -m 0755 ${S}/lte_log ${D}${sysconfdir}/init.d/
+<<<<<<< HEAD
 	install -m 0644 ${S}/mongodb.env ${D}${sysconfdir}/
 	install -m 0644 ${S}/mongodb.conf ${D}${sysconfdir}/
+=======
+	install -m 0755 ${S}/mongod ${D}${sysconfdir}/init.d/
+>>>>>>> 344ad9ff483c5a7c4fa539817c05c9fda9173f19
 
 	install -m 0755 ${S}/cpufrequtils ${D}${sysconfdir}/init.d/
 	install -m 0655 ${S}/init-functions ${D}${base_libdir}/lsb/
 	install -m 0655 ${S}/init-functions.d/20-left-info-blocks ${D}${base_libdir}/lsb/init-functions.d/
 	install -m 0655 ${S}/init-functions.d/40-systemd ${D}${base_libdir}/lsb/init-functions.d/
+<<<<<<< HEAD
 	install -m 0644 ${S}/wired.network ${D}${sysconfdir}/systemd/network/
 	install -m 0644 ${S}/bridge.network ${D}${sysconfdir}/systemd/network/
 	install -m 0644 ${S}/usbnet.network ${D}${sysconfdir}/systemd/network/
@@ -75,6 +86,15 @@ do_install () {
 	install -m 0644 ${S}/rsmb.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/mongod.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/70-usb-modeswitch.rules ${D}${base_libdir}/udev/rules.d/
+=======
+	install -m 0655 ${S}/wired.network ${D}${sysconfdir}/systemd/network/
+	install -m 0655 ${S}/bridge.network ${D}${sysconfdir}/systemd/network/
+	install -m 0655 ${S}/usbnet.network ${D}${sysconfdir}/systemd/network/
+	install -m 0655 ${S}/firstrun.service ${D}${sysconfdir}/systemd/system/
+	install -m 0655 ${S}/lte_log.service ${D}${sysconfdir}/systemd/system/
+	install -m 0655 ${S}/mongod.service ${D}${sysconfdir}/systemd/system/
+	install -m 0655 ${S}/70-usb-modeswitch.rules ${D}${base_libdir}/udev/rules.d/
+>>>>>>> 344ad9ff483c5a7c4fa539817c05c9fda9173f19
 
 	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rcS.d/S90firstrun
 	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc1.d/K90firstrun

@@ -4,14 +4,9 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=b2276b027815460f098d51494e2ff4f1"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 PR = "r0"
-
 BRANCH ?= "6lbr1.4"
-#SRCREV ?= "b976ce5907d8e6078e01aacab0ca14864aaa0f02"
-#SRCREV ?= "425a62b53b35c7d1fc33300f6c6d226bd6205397"
-#SRCREV ?= "f64e3bf8ee1a5b203b003fa032ef62cdfa9b1d86"
-#SRCREV ?= "df556ea9f1fee24f795013b550b91e30187c89b9"
 SRCREV ?= "f54509e71845f8c88c0e8b23cc616c54fed98837"
 
 SRC_URI = "git://gitolite@redmine.kundoxt.de:/6lbr.git;protocol=ssh;branch=${BRANCH}"
@@ -25,6 +20,8 @@ SRC_URI += "file://Makefile.native.patch \
 BROUTER_VER = "1.4"
 
 DEPENDS =" bridge-utils ncurses "
+RDEPENDS_router ?= "bash"
+
 S = "${WORKDIR}/git"
 PV = "${BROUTER_VER}+git${SRCPV}"
 6lbr = "${S}/examples/6lbr"
@@ -44,7 +41,7 @@ SYSTEMD_SERVICE_${PN} = "6lbr.service"
 
 do_compile () {
 	cd ${6lbr}
-	oe_runmake V=1 LDFLAGS+="${LDFLAGS} --sysroot=/opt/yocto/poky/build-odroid/tmp/sysroots/odroid-c2" all
+	oe_runmake LDFLAGS+="${LDFLAGS} --sysroot=/opt/yocto/poky/build-odroid/tmp/sysroots/odroid-c2" all
 }
 
 
@@ -66,7 +63,7 @@ do_install () {
 	install -m 0755	${6lbr}/bin/* ${D}${libdir}/6lbr/bin/
 	cp ${WORKDIR}/nvm_tool ${D}${libdir}/6lbr/bin	
 
-	install -m 0655 ${WORKDIR}/6lbr.service ${D}${sysconfdir}/systemd/system/	
+	install -m 0644 ${WORKDIR}/6lbr.service ${D}${sysconfdir}/systemd/system/
 }
 
 FILES_${PN} += " \

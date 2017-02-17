@@ -7,6 +7,7 @@ BindsTo=mosquitto.service
 [Service]
 Type=simple
 Restart=on-failure
+ExecStartPre=/bin/bash /home/marty/route.sh
 ExecStart=/home/marty/rsmb/broker_mqtts -c /home/marty/rsmb/broker.cfg
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStop=/bin/kill -HUP $MAINPID

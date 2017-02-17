@@ -13,11 +13,12 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384
 PR = "r0"
 SRCREV ?= "465b33afb8811f001499e11993a85e3b7dc19147"
 SRC_URI = "git://gitolite@redmine.kundoxt.de:/rsmb.git;protocol=ssh"
-SRC_URI += "file://Makefile.patch \
+SRC_URI += "file://Makefile.patch 	\
+	    file://route.sh 		\
 	   "
 
 RSMB_VER = "1.3"
-
+RDEPENDS_rsmb ?= "bash"
 ##DEPENDS =" bridge-utils ncurses "
 S = "${WORKDIR}/git"
 
@@ -33,15 +34,17 @@ do_compile () {
 
 do_install () {
 
-        install -d -m 755 ${D}/home/
-        install -d -m 755 ${D}/home/marty
-        install -d -m 755 ${D}/home/marty/rsmb/
+	install -d -m 755 ${D}/home/
+	install -d -m 755 ${D}/home/marty
+	install -m 755 ${WORKDIR}/route.sh ${D}/home/marty/route.sh
+	install -d -m 755 ${D}/home/marty/rsmb/
 	cp -r ./. ${D}/home/marty/rsmb/
         chown -R marty:marty ${D}/home/marty
         
 }
 
 FILES_${PN} += " \
+		/home/marty/		\
 		/home/marty/rsmb/*	\
 		/home/marty/rsmb/.git/*	\
 		/home/marty/rsmb/.pc/*	\

@@ -1,6 +1,6 @@
-# 6lbr border router recipe for yocto compiled image for Odroid C2
+# zwave4j recipe for yocto compiled image for Odroid C2
 # Created: Basharat Martin
-# Date: 14.11.2016
+# Date: 24.02.2017
 #
 
 LICENSE = "MIT"

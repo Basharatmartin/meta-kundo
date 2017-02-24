@@ -5,64 +5,45 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=b2276b027815460f098d51494e2ff4f1"
-SRCREV ?= "b90502609da0209ede28adece0fde9cc809bc911"
-SRC_URI = "git://gitolite@redmine.kundoxt.de:/runtime.git;protocol=ssh"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
+
+#SRCREV ?= "b90502609da0209ede28adece0fde9cc809bc911"
+SRCREV ?= "dfb96273af151934e16c37e838b529ceeb063987"
+SRC_URI = "git://gitolite@redmine.kundoxt.de:/private.git;protocol=ssh"
 PR = "r0"
-
-#SRC_URI = "\
-#	    file://marty.tar.gz \
-#	   "
-
 
 S = "${WORKDIR}/git"
 
-# DEPENDS = "expect"
-RDEPENDS_marty ?= "expect bash"
-
-# inherit useradd
-# inherit extrausers
-
-# USERADD_PACKAGES = "${PN}"
-# GROUPADD_PARAM_${PN} = "-g 880 sudo"
-# USERADD_PARAM_${PN} = "-u 1200 -G dialout -G sudo -N -m -d /home/marty -r -s /bin/bash -P 'martymarty' marty"
-# USERADD_PARAM_${PN} = "-u 1000 -d /home/marty -s /bin/bash marty"
-# USERMOD_PARAM_${PN} += "-aG sudo marty \
-#			-aG dialout marty \	
-#		       "
-
-# INHERIT += "extrausers"
-# EXTRA_USERS_PARAMS = "\
-#		usermod -aG sudo marty;\
-#		usermod -aG dialout marty;\
-#		"
+RDEPENDS_marty ?= "expect bash perl"
 
 #INSANE_SKIP_${PN} = "already-stripped"
-
 #do_unpack[noexec] = "1"
 
 do_install () {
 
-	install -d -m 755 ${D}/home/
-	install -d -m 755 ${D}/home/marty
-	install -d -m 755 ${D}/home/marty/runtime_rel
+	install -d -m 755 ${D}${localstatedir}
+	install -d -m 755 ${D}${localstatedir}/lock/
+
+	#install -d -m 755 ${D}/home/marty
+	#install -d -m 755 ${D}/home/marty/runtime_rel
 	# install -d ${D}${base_libdir}/lsb
 	#install -m 0755 ${S}/abc.txt ${D}${base_libdir}/lsb/
 	#cp ${S}/marty.tar.gz ${D}${base_libdir}/lsb/
 	#install -m 0666 ${S}/marty.tar.gz ${D}${base_libdir}/lsb/
 	# tar czvf ${D}${base_libdir}/lsb/marty.tar.gz ./.
 	# tar czvf ${D}/home/marty/marty.tar.gz ./.
-	cp -r ./. ${D}/home/marty/runtime_rel/
+	cp -r ${S}/current/./.  ${D}/
 	#cp ./.gitignore ${D}/home/marty/runtime/.gitignore
 	rm ${D}/home/marty/runtime_rel/lib/native/librxtxSerial.so
 	rm ${D}/home/marty/runtime_rel/lib/native/librxtxSerial-2.2pre1.so
 	chown -R marty:marty ${D}/home/marty
+	chmod 775 ${D}${localstatedir}/lock/
+	chgrp lock ${D}${localstatedir}/lock/
 	
 }
 
 FILES_${PN} += " \
 		/home/marty/runtime_rel/*		\
-		/home/marty/runtime_rel/.git/*		\
 		/home/marty/runtime_rel/.settings/*	\
 		/home/marty/runtime_rel/.idea/*		\
 		/home/marty/runtime_rel/.gitignore	\
@@ -70,5 +51,6 @@ FILES_${PN} += " \
 		/home/marty/runtime_rel/.project	\
 		/home/marty/runtime_rel/.factorypath	\
 		/home/marty/runtime_rel/.idea/.name	\
+		/run/lock/				\
 		"
 

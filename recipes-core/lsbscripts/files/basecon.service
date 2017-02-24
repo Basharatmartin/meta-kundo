@@ -1,0 +1,13 @@
+[Unit]
+Description=The Marty
+After=mongod.service
+
+[Service]
+User=root
+Group=lock
+WorkingDirectory=/home/marty/runtime_rel
+ExecStart=/usr/bin/java -Dgosh.args=--nointeractive -Djava.library.path=/usr/lib/jni -Dmarty.home.folder=/home/marty/runtime_rel -Dorg.osgi.framework.storage=/home/marty/runtime_rel/felix-cache -jar /home/marty/runtime_rel/marty.jar
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -12,7 +12,8 @@ PR = "r0"
 
 BRANCH ?= "1.4.6"
 #SRCREV ?= "b48d900e861b9bc002f29eaf99e66d29a1495d77"
-SRCREV ?= "c286b148bc0ea951f8e383818930ec9194c2bdca"
+#SRCREV ?= "c286b148bc0ea951f8e383818930ec9194c2bdca"
+SRCREV ?= "4be8b0f5cc0c0eac996d730b776d7bf21acfc326"
 
 SRC_URI = "git://github.com/OpenZWave/open-zwave.git"
 
@@ -40,9 +41,13 @@ do_install () {
 	install -m 0755 ${S}/ozw_config ${D}${bindir}/
 	install -m 0755 ${S}/libopenzwave.so.1.4 ${D}${libdir}/
 	#cp ${S}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
-	ln -sn ${D}${libdir}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
+	#ln -sn ${D}${libdir}/libopenzwave.so.1.4 ${D}${libdir}/libopenzwave.so
 
-	cp -r ${S}/config/* ${D}${sysconfdir}/openzwave/
+	cp -r ${S}/config ${D}${sysconfdir}/openzwave/
+	install -m 0755 ${S}/MinOZW ${D}${sysconfdir}/openzwave/
+	install -m 0755 ${S}/ozw_config ${D}${sysconfdir}/openzwave/
+	cd  ${D}${libdir}/
+	ln -sn libopenzwave.so.1.4 libopenzwave.so
 
 }
 

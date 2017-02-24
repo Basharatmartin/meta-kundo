@@ -1,0 +1,31 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
+#export PS1='\h:\w\$ '
+
+if [ -f /home/marty/runtime_rel/identity ]; then
+        #export PS1='$USER@$(< /home/marty/runtime_rel/identity):$(pwd)$'
+        export PS1='\u@$(< /home/marty/runtime_rel/identity):\w$ '
+else
+        #export PS1='$USER@NO_IDENTITY$:$(pwd)$'
+        export PS1='\u@NO_IDENTITY:\w$ '
+fi
+
+
+
+
+umask 022
+
+# You may uncomment the following lines if you want `ls' to be colorized:
+# export LS_OPTIONS='--color=auto'
+# eval `dircolors`
+# alias ls='ls $LS_OPTIONS'
+# alias ll='ls $LS_OPTIONS -l'
+# alias l='ls $LS_OPTIONS -lA'
+#
+# Some more alias to avoid making mistakes:
+# alias rm='rm -i'
+# alias cp='cp -i'
+# alias mv='mv -i'
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
+echo -e "\e[?16;0;300c"
+

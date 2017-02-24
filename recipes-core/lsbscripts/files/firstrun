@@ -231,10 +231,10 @@ set_locales_keymaps (){
 	/usr/bin/localectl set-keymap de &&
 	/usr/sbin/usermod -aG sudo marty &&
 	/usr/sbin/usermod -aG dialout marty &&
-	/bin/echo 'export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH' >> /home/marty/.bashrc &&
-	##/bin/echo 'export PROMPT_COMMAND='echo -e "\e[?16;0;300c"'' >> /home/marty/.bashrc
-	PROMPT_COMMAND='echo -e "\e[?16;0;300c"'
-	/bin/echo $PROMPT_COMMAND >> /home/marty/.bashrc &&
+	#/bin/echo 'export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH' >> /home/marty/.bashrc &&
+	######/bin/echo 'export PROMPT_COMMAND='echo -e "\e[?16;0;300c"'' >> /home/marty/.bashrc
+	##PROMPT_COMMAND='echo -e "\e[?16;0;300c"'
+	#/bin/echo $PROMPT_COMMAND >> /home/marty/.bashrc &&
 	/bin/echo '%sudo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 }

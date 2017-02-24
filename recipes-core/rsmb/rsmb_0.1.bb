@@ -15,6 +15,7 @@ SRCREV ?= "465b33afb8811f001499e11993a85e3b7dc19147"
 SRC_URI = "git://gitolite@redmine.kundoxt.de:/rsmb.git;protocol=ssh"
 SRC_URI += "file://Makefile.patch 	\
 	    file://route.sh 		\
+	    file://broker_cfg.patch	\
 	   "
 
 RSMB_VER = "1.3"

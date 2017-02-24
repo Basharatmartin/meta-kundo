@@ -10,6 +10,8 @@ PR = "r1"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 
+SRC_URI += "file://bashrc \
+	   "
 
 inherit useradd
 USERADD_PACKAGES = "${PN}"
@@ -20,7 +22,8 @@ do_install () {
 
         install -d -m 755 ${D}/home/
         install -d -m 755 ${D}/home/marty
-        chown -R marty:users ${D}/home/marty
+	install -m 775 ${WORKDIR}/bashrc ${D}/home/marty/.bashrc
+	chown -R marty:users ${D}/home/marty
 
 }
 

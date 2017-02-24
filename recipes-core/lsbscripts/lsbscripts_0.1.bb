@@ -29,6 +29,7 @@ SRC_URI += "file://init-functions \
 	    file://70-usb-modeswitch.rules \
 	    file://mongod \
 	    file://mongod.service \
+	    file://basecon.service \
 	   "
 
 S = "${WORKDIR}"
@@ -37,7 +38,7 @@ RDEPENDS_lsbscripts ?= "bash"
 inherit systemd	
 SYSTEMD_PACKAGES = "lsbscripts"
 SYSTEMD_SERVICE_${PN} = "firstrun.service lte_log.service ssh.service	\
-			 rsmb.service mongod.service			\
+			 rsmb.service mongod.service basecon.service	\
 			"
 
 do_install () {
@@ -52,7 +53,9 @@ do_install () {
 	install -d ${D}${base_libdir}/lsb/init-functions.d
 	install -d ${D}${base_libdir}/udev/
 	install -d ${D}${base_libdir}/udev/rules.d
-
+	install -d ${D}/home/
+	install -d ${D}/home/marty/
+	install -d ${D}/home/marty/lte-log/
 
 	install -m 0755 ${S}/firstrun ${D}${sysconfdir}/init.d/
 	install -m 0755 ${S}/reboot ${D}${sysconfdir}/init.d/
@@ -81,7 +84,10 @@ do_install () {
 	install -m 0655 ${S}/firstrun.service ${D}${sysconfdir}/systemd/system/
 	install -m 0655 ${S}/lte_log.service ${D}${sysconfdir}/systemd/system/
 	install -m 0655 ${S}/mongod.service ${D}${sysconfdir}/systemd/system/
+	install -m 0655 ${S}/basecon.service ${D}${sysconfdir}/systemd/system/
 	install -m 0655 ${S}/70-usb-modeswitch.rules ${D}${base_libdir}/udev/rules.d/
+
+	chown -R marty:users ${D}/home/marty/
 
 	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rcS.d/S90firstrun
 	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc1.d/K90firstrun
@@ -92,6 +98,7 @@ do_install () {
 }
 
 FILES_${PN} += " \
+		/home/marty/lte-log	\
 		${base_libdir}/lsb	\
 		${base_libdir}/lsb/init-functions.d \
 		"

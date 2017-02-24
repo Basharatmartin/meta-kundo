@@ -5,7 +5,7 @@ USER_NAME=$(id -u -n)
 
 # Create the file for log
 
-LOG_PATH=/home/marty/lte_log.log
+LOG_PATH=/home/marty/lte-log/lte_log.log
 PID_PATH=/home/marty/lte_log.pid
 device_id="12d1:14dc"
 

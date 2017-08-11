@@ -11,25 +11,28 @@ PR = "r0"
 SRC_URI += "file://init-functions \
 	    file://init-functions.d/20-left-info-blocks \
 	    file://init-functions.d/40-systemd \
-	    file://cpufrequtils \
-	    file://wired.network \
-	    file://bridge.network \
-	    file://usbnet.network \
-	    file://firstrun \
-	    file://reboot \
-	    file://resize2fs \
-	    file://firstrun.service \
-	    file://lte_log \
-	    file://lte_log.service \
-	    file://ssh.service \
-	    file://rsmb.service \
-	    file://mongod.service \
-	    file://mongodb.env \
-	    file://mongodb.conf \
+	    file://cpufrequtils 	\
+	    file://wired.network 	\
+	    file://bridge.network 	\
+	    file://usbnet.network 	\
+	    file://firstrun 		\
+	    file://reboot 		\
+	    file://resize2fs 		\
+	    file://firstrun.service 	\
+	    file://lte_log 		\
+	    file://lte_log.service 	\
+	    file://ssh.service 		\
+	    file://rsmb.service 	\
+	    file://mongod.service 	\
+	    file://mongodb.env 		\
+	    file://mongodb.conf 	\
 	    file://70-usb-modeswitch.rules \
-	    file://mongod \
-	    file://mongod.service \
-	    file://basecon.service \
+	    file://mongod 		\
+	    file://mongod.service 	\
+	    file://basecon.service 	\
+	    file://zipgateway.service 	\
+	    file://brup.service		\
+	    file://brdown.service	\
 	   "
 
 S = "${WORKDIR}"
@@ -39,6 +42,7 @@ inherit systemd
 SYSTEMD_PACKAGES = "lsbscripts"
 SYSTEMD_SERVICE_${PN} = "firstrun.service lte_log.service ssh.service	\
 			 rsmb.service mongod.service basecon.service	\
+			 zipgateway.service				\
 			"
 
 do_install () {
@@ -78,14 +82,17 @@ do_install () {
 	install -m 0644 ${S}/rsmb.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/mongod.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/70-usb-modeswitch.rules ${D}${base_libdir}/udev/rules.d/
-	install -m 0655 ${S}/wired.network ${D}${sysconfdir}/systemd/network/
-	install -m 0655 ${S}/bridge.network ${D}${sysconfdir}/systemd/network/
-	install -m 0655 ${S}/usbnet.network ${D}${sysconfdir}/systemd/network/
-	install -m 0655 ${S}/firstrun.service ${D}${sysconfdir}/systemd/system/
-	install -m 0655 ${S}/lte_log.service ${D}${sysconfdir}/systemd/system/
-	install -m 0655 ${S}/mongod.service ${D}${sysconfdir}/systemd/system/
-	install -m 0655 ${S}/basecon.service ${D}${sysconfdir}/systemd/system/
-	install -m 0655 ${S}/70-usb-modeswitch.rules ${D}${base_libdir}/udev/rules.d/
+	install -m 0644 ${S}/wired.network ${D}${sysconfdir}/systemd/network/
+	install -m 0644 ${S}/bridge.network ${D}${sysconfdir}/systemd/network/
+	install -m 0644 ${S}/usbnet.network ${D}${sysconfdir}/systemd/network/
+	install -m 0644 ${S}/firstrun.service ${D}${sysconfdir}/systemd/system/
+	install -m 0644 ${S}/lte_log.service ${D}${sysconfdir}/systemd/system/
+	install -m 0644 ${S}/mongod.service ${D}${sysconfdir}/systemd/system/
+	install -m 0644 ${S}/basecon.service ${D}${sysconfdir}/systemd/system/
+	install -m 0644 ${S}/zipgateway.service ${D}${sysconfdir}/systemd/system/
+	install -m 0644 ${S}/brup.service ${D}${sysconfdir}/systemd/system/
+	install -m 0644 ${S}/brdown.service ${D}${sysconfdir}/systemd/system/
+	install -m 0644 ${S}/70-usb-modeswitch.rules ${D}${base_libdir}/udev/rules.d/
 
 	chown -R marty:users ${D}/home/marty/
 

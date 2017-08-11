@@ -1,0 +1,9 @@
+[Service]
+Type=oneshot
+RemainAfterExit=no
+ExecStart=/usr/local/zipgw-scripts/ifdown.d/50bridge.sh
+
+[Install]
+WantedBy=multi-user.target
+
+

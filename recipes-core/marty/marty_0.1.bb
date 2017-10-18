@@ -32,13 +32,14 @@ do_install () {
 	#install -m 0666 ${S}/marty.tar.gz ${D}${base_libdir}/lsb/
 	# tar czvf ${D}${base_libdir}/lsb/marty.tar.gz ./.
 	# tar czvf ${D}/home/marty/marty.tar.gz ./.
+	#addgroup marty
 	cp -r ${S}/current/./.  ${D}/
 	#cp ./.gitignore ${D}/home/marty/runtime/.gitignore
 	rm ${D}/home/marty/runtime_rel/lib/native/librxtxSerial.so
 	rm ${D}/home/marty/runtime_rel/lib/native/librxtxSerial-2.2pre1.so
-	chown -R marty:marty ${D}/home/marty
+	#chown marty:users -R ${D}/home/marty
 	chmod 775 ${D}${localstatedir}/lock/
-	chgrp lock ${D}${localstatedir}/lock/
+	#chgrp lock ${D}${localstatedir}/lock/
 	
 }
 

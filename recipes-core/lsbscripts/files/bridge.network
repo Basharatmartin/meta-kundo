@@ -3,5 +3,5 @@ Name=br*
 
 
 [Network]
-DHCP=yes
+DHCP=ipv4
 

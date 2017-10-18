@@ -1,0 +1,3 @@
+EXITFLAG = False
+
+SOCKETS = []

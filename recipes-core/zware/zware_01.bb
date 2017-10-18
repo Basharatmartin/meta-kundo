@@ -7,38 +7,42 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 PR = "r0"
 BRANCH ?= "zipgateway_boni"
-SRCREV ?= "edf4b4c4e505891d1876e2adfad8bfdd0dcbd9e6"
+#SRCREV ?= "edf4b4c4e505891d1876e2adfad8bfdd0dcbd9e6"
+#SRCREV ?= "afb156fb27e55edf4eb5d9126afc5106df1ad3b3"
 
-SRC_URI = "git://gitolite@redmine.kundoxt.de:/zipgateway.git;protocol=ssh;branch=${BRANCH}"
-# SRC_URI += "				\
-#	   file://zipgateway.service 	\
-#	   "
+#SRC_URI = "git://gitolite@redmine.kundoxt.de:/zipgateway.git;protocol=ssh;branch=${BRANCH}"
+SRC_URI += "				\
+	   file://zware_portal.tar.gz \
+	   "
 
 #DEPENDS +=" libusb1 openssl python-native "
 DEPENDS +=" bash "
 RDEPENDS_${PN} ?= "bash"
 
-S = "${WORKDIR}/git/zware_v0_50"
+S = "${WORKDIR}"
 #B = "${WORKDIR}/build/"
 #C = "${WORKDIR}/build/_CPack_Packages/Linux/DEB/zipgateway-..0-Linux-aarch64/"
 
-inherit setuptools
+#inherit setuptools
 #SYSTEMD_PACKAGES = "zipgateway"
 #SYSTEMD_SERVICE_${PN} = "zipgateway.service"
 
 #INSANE_SKIP_${PN} = "useless-rpaths rpaths"
 
 
-do_configure(){
-
-	#export CC="$CC" 
-	#export CXX="$CXX"
-
-	./build/build.sh local odroidc2 release noparallel build 
-	#cd ${B}
-	#${MAKE}
-	#make package
-}
+#do_configure(){
+#
+#	#export CC="$CC" 
+#	#export CXX="$CXX"
+#
+#	#cp ${WORKDIR}/config.cfg ${S}
+#	#cp ${WORKDIR}/config.cfg ${S}/config_local/
+#	
+#	#./build/build.sh local odroidc2 release noparallel build 
+#	#cd ${B}
+#	#${MAKE}
+#	#make package
+#}
 
 #do_install(){
 #

@@ -1,0 +1,11 @@
+diff --git a/Makefile b/Makefile
+index 584c8ce..9045c49 100644
+--- a/Makefile
++++ b/Makefile
+@@ -6,3 +6,6 @@ bindings:
+ 
+ install:
+ 	sudo python setup.py install
++
++clean:
++	rm -rf *.o

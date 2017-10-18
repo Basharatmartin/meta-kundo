@@ -1,0 +1,18 @@
+#!/bin/bash
+# odroid-auto-bridge v0.7 by graysky
+
+case $1 in
+  u)
+    ip link add name br-lan type bridge
+    ip link set eth0 up
+    ip link set eth0 master br-lan
+    ;;
+  d)
+    ip link delete br-lan type bridge
+    ;;
+  *)
+    echo "$0 {u/d}"
+    exit 0
+esac
+
+# vim:set ts=2 sw=2 et:

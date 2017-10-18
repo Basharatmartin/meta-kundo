@@ -227,6 +227,13 @@ create_ssh_host_keys (){
 	/usr/bin/ssh-keygen -t ed25519 -N "" -f /etc/ssh/ssh_host_ed25519_key
 }
 
+systemd_resolved (){
+
+	/bin/ln -sn /run/systemd/resolve/resolv.conf /etc/resolv.conf
+	/bin/systemctl restart systemd-resolved
+
+}
+
 set_locales_keymaps (){
 	/usr/bin/localectl set-keymap de &&
 	/usr/sbin/usermod -aG sudo marty &&
@@ -246,6 +253,8 @@ check_prerequisits() {
 } # check_prerequisits
 
 main() {
+
+	systemd_resolved
 	touch /tmp/firstrun_running
 
 	check_prerequisits

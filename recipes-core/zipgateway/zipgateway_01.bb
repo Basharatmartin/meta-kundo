@@ -8,12 +8,13 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384
 PR = "r0"
 BRANCH ?= "zipgateway_boni"
 #SRCREV ?= "0b3c2eccbf9863370cd49ca1f6f1cff585146930"
-SRCREV ?= "a00d652d03d252fbda1dd7b2cc5de49120ccfc33"
+SRCREV ?= "afb156fb27e55edf4eb5d9126afc5106df1ad3b3"
 
 SRC_URI = "git://gitolite@redmine.kundoxt.de:/zipgateway.git;protocol=ssh;branch=${BRANCH}"
-# SRC_URI += "				\
-#	   file://zipgateway.service 	\
-#	   "
+SRC_URI += "				\
+	   file://zipgateway 		\
+	   file://odroid-bridge 	\
+	   "
 
 DEPENDS +=" libusb1 openssl python-native "
 RDEPENDS_${PN} ?= "bash"
@@ -40,20 +41,25 @@ do_install(){
 	install -dm 0600 ${D}${sysconfdir}/init.d
 	install -dm 0600 ${D}${sysconfdir}/systemd/system
 
-	install -dm 0600 ${D}${sbindir}
+	install -dm 0600 ${D}${bindir}
+	install -dm 0644 ${D}${prefix}/local/sbin
 	install -dm 0644 ${D}${prefix}/local/etc
 	install -dm 0644 ${D}${prefix}/local/man/man3
-	install -dm 0644 ${D}${prefix}/local/zipgw-scripts
-	install -dm 0644 ${D}${prefix}/local/zipgw-scripts/ifdown.d
-	install -dm 0644 ${D}${prefix}/local/zipgw-scripts/ifup.d
+	#install -dm 0644 ${D}${prefix}/local/zipgw-scripts
+	#install -dm 0644 ${D}${prefix}/local/zipgw-scripts/ifdown.d
+	#install -dm 0644 ${D}${prefix}/local/zipgw-scripts/ifup.d
 
-	cp -r ${C}/usr/sbin/* ${D}${sbindir}
+	cp -r ${C}/usr/sbin/* ${D}${prefix}/local/sbin
 	cp -r ${C}/usr/etc/* ${D}${prefix}/local/etc/
 	cp -r ${C}/usr/local/man/* ${D}${prefix}/local/man/
-	cp -r ${C}/etc/* ${D}${sysconfdir}/	
+	#cp -r ${C}/etc/* ${D}${sysconfdir}/	
+	cp -r ${WORKDIR}/zipgateway ${D}${sysconfdir}/init.d/	
 
-	cp ${WORKDIR}/git/Z-Wave_Odroidc2_Binaries/usr/local/zipgw-scripts/ifup.d/50bridge.sh ${D}${prefix}/local/zipgw-scripts/ifup.d/
-	cp ${WORKDIR}/git/Z-Wave_Odroidc2_Binaries/usr/local/zipgw-scripts/ifdown.d/50bridge.sh ${D}${prefix}/local/zipgw-scripts/ifdown.d/	
+	cp ${WORKDIR}/odroid-bridge/odroid-auto-bridge ${D}${bindir}
+
+
+	#cp ${WORKDIR}/git/Z-Wave_Odroidc2_Binaries/usr/local/zipgw-scripts/ifup.d/50bridge.sh ${D}${prefix}/local/zipgw-scripts/ifup.d/
+	#cp ${WORKDIR}/git/Z-Wave_Odroidc2_Binaries/usr/local/zipgw-scripts/ifdown.d/50bridge.sh ${D}${prefix}/local/zipgw-scripts/ifdown.d/	
 
 	#	install -m 0644 ${WORKDIR}/zipgateway.service ${D}${sysconfdir}/systemd/system/
 }

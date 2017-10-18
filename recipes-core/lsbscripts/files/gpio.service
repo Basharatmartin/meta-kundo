@@ -1,0 +1,20 @@
+[Unit]
+Description=GPIO service
+Before=multi-user.target
+Before=shutdown.target
+Before=lock_rights.service
+After=network-online.target
+After=remote-fs.target
+After=nss-lookup.target
+After=sshd.service
+Wants=mosquitto.service
+After=mosquitto.service
+Conflicts=shutdown.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /home/marty/gpio_service/gpioRun.py
+ExecStop=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

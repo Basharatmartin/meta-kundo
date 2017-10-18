@@ -12,7 +12,6 @@ SRC_URI += "file://init-functions \
 	    file://init-functions.d/20-left-info-blocks \
 	    file://init-functions.d/40-systemd \
 	    file://cpufrequtils 	\
-	    file://wired.network 	\
 	    file://bridge.network 	\
 	    file://usbnet.network 	\
 	    file://firstrun 		\
@@ -31,8 +30,8 @@ SRC_URI += "file://init-functions \
 	    file://mongod.service 	\
 	    file://basecon.service 	\
 	    file://zipgateway.service 	\
-	    file://brup.service		\
-	    file://brdown.service	\
+	    file://gpio.service		\
+	    file://odroid-auto-bridge.service	\
 	   "
 
 S = "${WORKDIR}"
@@ -42,7 +41,7 @@ inherit systemd
 SYSTEMD_PACKAGES = "lsbscripts"
 SYSTEMD_SERVICE_${PN} = "firstrun.service lte_log.service ssh.service	\
 			 rsmb.service mongod.service basecon.service	\
-			 zipgateway.service				\
+			 zipgateway.service gpio.service odroid-auto-bridge.service	\
 			"
 
 do_install () {
@@ -73,7 +72,7 @@ do_install () {
 	install -m 0655 ${S}/init-functions ${D}${base_libdir}/lsb/
 	install -m 0655 ${S}/init-functions.d/20-left-info-blocks ${D}${base_libdir}/lsb/init-functions.d/
 	install -m 0655 ${S}/init-functions.d/40-systemd ${D}${base_libdir}/lsb/init-functions.d/
-	install -m 0644 ${S}/wired.network ${D}${sysconfdir}/systemd/network/
+	#install -m 0644 ${S}/wired.network ${D}${sysconfdir}/systemd/network/
 	install -m 0644 ${S}/bridge.network ${D}${sysconfdir}/systemd/network/
 	install -m 0644 ${S}/usbnet.network ${D}${sysconfdir}/systemd/network/
 	install -m 0644 ${S}/firstrun.service ${D}${sysconfdir}/systemd/system/
@@ -82,26 +81,17 @@ do_install () {
 	install -m 0644 ${S}/rsmb.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/mongod.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/70-usb-modeswitch.rules ${D}${base_libdir}/udev/rules.d/
-	install -m 0644 ${S}/wired.network ${D}${sysconfdir}/systemd/network/
-	install -m 0644 ${S}/bridge.network ${D}${sysconfdir}/systemd/network/
-	install -m 0644 ${S}/usbnet.network ${D}${sysconfdir}/systemd/network/
-	install -m 0644 ${S}/firstrun.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/lte_log.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/mongod.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/basecon.service ${D}${sysconfdir}/systemd/system/
 	install -m 0644 ${S}/zipgateway.service ${D}${sysconfdir}/systemd/system/
-	install -m 0644 ${S}/brup.service ${D}${sysconfdir}/systemd/system/
-	install -m 0644 ${S}/brdown.service ${D}${sysconfdir}/systemd/system/
-	install -m 0644 ${S}/70-usb-modeswitch.rules ${D}${base_libdir}/udev/rules.d/
+	#install -m 0644 ${S}/brup.service ${D}${sysconfdir}/systemd/system/
+	#install -m 0644 ${S}/brdown.service ${D}${sysconfdir}/systemd/system/
+	install -m 0644 ${S}/gpio.service ${D}${sysconfdir}/systemd/system/
+	install -m 0644 ${S}/odroid-auto-bridge.service ${D}${sysconfdir}/systemd/system/
 
-	chown -R marty:users ${D}/home/marty/
+	#chown -R marty:users ${D}/home/marty/
 
-	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rcS.d/S90firstrun
-	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc1.d/K90firstrun
-	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc2.d/S90firstrun
-	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc3.d/S90firstrun
-	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc4.d/S90firstrun
-	#ln -sf ../init.d/firstrun  ${D}${sysconfdir}/rc5.d/K90firstrun
 }
 
 FILES_${PN} += " \

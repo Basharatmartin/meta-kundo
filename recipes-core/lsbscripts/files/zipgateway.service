@@ -1,16 +1,14 @@
 [Unit]
 Description=LSB: start Z/IP Gateway (zipgateway)
 After=systemd-networkd
-Wants=systemd-networkd
 Conflicts=shutdown.target
 
 [Service]
 Type=forking
-Restart=on-failure
-RemainAfterExit=yes
-ExecStartPre=
 ExecStart=/etc/init.d/zipgateway start
 ExecStop=/etc/init.d/zipgateway stop
+RestartSec=3
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

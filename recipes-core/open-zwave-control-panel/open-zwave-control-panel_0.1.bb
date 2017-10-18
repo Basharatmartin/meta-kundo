@@ -28,7 +28,9 @@ PV = "${BRANCH}+git${SRCPV}"
 
 
 do_compile () {
-	oe_runmake  BITBAKE_ENV=1 CC="${CC}" CXX="${CXX}" LD="${CXX}" AR="${AR}" RANLIB="${RANLIB}" 
+	cd ${S}
+	##oe_runmake  BITBAKE_ENV=1 CC="${CC}" CXX="${CXX}" LD="${CXX}" AR="${AR}" RANLIB="${RANLIB}" 
+	make  BITBAKE_ENV=1 CC="${CC}" CXX="${CXX}" LD="${CXX}" AR="${AR}" RANLIB="${RANLIB}" 
 }
 
 

@@ -1,0 +1,11 @@
+{
+    "mqtt.ip": "localhost",
+    "mqtt.port": 1883,
+    "mqtt.publish": "/native/out/gpio/value/kxt/plain/",
+    "mqtt.subscribe": "/native/in/gpio/value/kxt/plain/",
+    "ssh.path": "/home/marty/gpio_service/lib/startssh.sh",
+    "events": ["service_button"],
+    "buttons": {
+      "service_button": {"gpio": 1, "timeFormat": "ms"}
+    }
+}

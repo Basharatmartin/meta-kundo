@@ -1,0 +1,13 @@
+diff --git a/WiringPi/wiringPi/wiringPi.c b/WiringPi/wiringPi/wiringPi.c
+index 2382112..5390f4c 100644
+--- a/WiringPi/wiringPi/wiringPi.c
++++ b/WiringPi/wiringPi/wiringPi.c
+@@ -682,6 +682,8 @@ int piBoardRev (void)
+ 
+   if (strstr (line, "BCM2709") != NULL)
+     piModel2 = TRUE ;
++  else if (strstr (line, "ODROID-C2") != NULL)
++    piModel2 = TRUE ;
+   else if (strstr (line, "BCM2708") == NULL)
+   {
+     fprintf (stderr, "Unable to determine hardware version. I see: %s,\n", line) ;

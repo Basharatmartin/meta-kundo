@@ -1,0 +1,14 @@
+[Unit]
+Description=Reference Listener MQTT
+After=zipgateway.service mosquitto.service
+Conflicts=shutdown.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /home/marty/scripts/python-zip-listener.py
+RestartSec=3
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

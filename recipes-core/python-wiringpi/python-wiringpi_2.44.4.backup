@@ -1,0 +1,63 @@
+# wiringpi2 recipe for yocto compiled image for Odroid C2
+# Created: Basharat Martin
+# Date: 16.10.2017
+
+HOMEPAGE = "https://projects.drogon.net/raspberry-pi/wiringpi/"
+SECTION = "devel/libs"
+#LICENSE = "LGPLv3+"
+#LIC_FILES_CHKSUM = "file://README;md5=995ad8cec39ff3c8187fd7ea069e94f8"
+
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
+#LIC_FILES_CHKSUM = "file://LICENSE;md5=378acef375e17a3bff03bd0f78c53220"
+#DEPEND = "swig"
+#RDEPENDS_${PN} = "python"
+#PR = "r0"
+
+#SRCREV = "620be8c3264ed23a7d45d0a473ffeec3c2a4bc5e"
+#SRC_URI = "git://github.com/Gadgetoid/WiringPi2-Python.git"
+#SRC_URI += "				\
+#	   file://Makefile.patch	\
+#	   file://wiringPi.c.patch	\
+#	   "
+#SRC_URI[md5sum] = "dbcfff0b6dfc9bc4671a50c2fa4754bc"
+#SRC_URI[sha256sum] = "320c6a9c8f126d2cb4dde642c5e6249b046ffb2e817190216e8d51ad6f341875"
+
+#SRC_URI = "https://pypi.python.org/packages/b9/25/e7ca200f65c9e8385149a1694e6a54923fdb2c70ebada909fe055f6db74d/wiringpi2-2.32.3.tar.gz"
+SRC_URI = "https://pypi.python.org/packages/dd/a5/23352c20c6246608456ca3f34c074d62aed4cdcf7704b62be6246e75881e/wiringpi-2.44.4.tar.gz"
+SRC_URI[md5sum] = "c2819068036a4d91c2909122f085beb0"
+#SRC_URI[md5sum] = "b2db98864b8391c99c20ff12e66d3986"
+#SRC_URI[sha256sum] = "77a355419d54c63e410636db05daf49bf5c27e8b6fb6d6053cd551719a2708fa"
+##md5=b2db98864b8391c99c20ff12e66d3986
+
+#SRCREV = "ed4f8cb882a79c0c28a3b154b5583706319180f2"
+#SRC_URI = "git://github.com/WiringPi/WiringPi-Python.git"
+
+inherit pypi setuptools  
+
+#PYPI_PACKAGE = "Wiringpi"
+
+#RDEPENDS_${PN} += " \
+#	swig \
+#	"
+
+
+#COMPATIBLE_MACHINE = "odroid-c2"
+
+S = "${WORKDIR}/wiringpi-2.44.4"
+#S = "${WORKDIR}/git"
+
+
+# need to export these variables for python-config to work
+#export BUILD_SYS
+#export HOST_SYS
+#export STAGING_INCDIR
+#export STAGING_LIBDIR
+
+#BBCLASSEXTEND = "native"
+
+
+
+
+
+

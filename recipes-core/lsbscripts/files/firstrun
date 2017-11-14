@@ -62,52 +62,16 @@ EOT
 chmod +x /tmp/create_swap.sh
 
 collect_information() {
-	# get some info about the board
-	source /etc/armbian-release
-	DISTRIBUTION=$(lsb_release -cs)
-	
-	# enable BT on cubietruck
-	[[ "$BOARD" == "cubietruck" ]] && update-rc.d brcm40183-patch defaults
-	
-	# enable BT on Solidrun boards
-	[[ "$BOARD" == "Cubox i2eX/i4" ]] && update-rc.d brcm4330-patch defaults && /etc/init.d/brcm4330-patch start
-	
-	case ${DISTRIBUTION} in
-		wheezy)
-			root_device=$(mountpoint -d /)
-			for file in /dev/* ; do
-				CURRENT_DEVICE=$(printf "%d:%d" $(stat --printf="0x%t 0x%T" $file))
-				if [ $CURRENT_DEVICE = $root_device ]; then
-					root_partition=$file
-					break;
-				fi
-			done
-			rootfstype=$(blkid -s TYPE -o value $root_partition)
-			;;
-		*)
-			ROOTFS=$(findmnt / | awk -F" " '/\/dev\// {print $2"\t"$3}')
-			set ${ROOTFS}
-			root_partition=$1
-			rootfstype=$2
-			;;
-	esac
-} # collect_information
 
-adjust_sunxi_settings() {
-	# set some mac address for BT
-	[[ "$(lsmod | grep bcmdhd)" != "" ]] && \
-		(MACADDR=$(printf '43:29:B1:%02X:%02X:%02X\n' $[RANDOM%256] $[RANDOM%256] $[RANDOM%256]) ; \
-		sed -i "s/^MAC_ADDR=.*/MAC_ADDR=${MACADDR}/" /etc/default/brcm40183 \
-		echo -e "\n### [firstrun] Use MAC address ${MACADDR} for Bluetooth from now" >>${Log})
+	# collect information of a partition
+	ROOTFS=$(findmnt / | awk -F" " '/\/dev\// {print $2"\t"$3}')
+	set ${ROOTFS}
+	root_partition=$1
+	rootfstype=$2
+
 	
-	# trigger red or blue LED as user feedback
-	echo heartbeat >/sys/class/leds/*red*/trigger 2>/dev/null || echo heartbeat >/sys/class/leds/*blue*/trigger 2>/dev/null	
-	[ -f /etc/wicd/wired-settings.conf ] && \
-		read HOSTNAME </etc/hostname
-		sed -i "s/^dhcphostname =.*/dhcphostname = ${HOSTNAME}/" /etc/wicd/wired-settings.conf && \
-		sed -i "s/wpa_driver =.*/wpa_driver = none/" /etc/wicd/manager-settings.conf \
-		echo -e "\n### [firstrun] Use ${HOSTNAME} for wicd settings" >>${Log}
-} # adjust_sunxi_settings
+
+} 
 
 do_expand_rootfs() {
 	# get device node for boot media
@@ -218,7 +182,7 @@ do_expand_rootfs() {
 		echo -e "\n### [firstrun] Automated reboot needed to let /etc/init.d/resize2fs do the job" >>${Log}
 	fi
 	return 0
-} # do_expand_rootfs
+} 
 
 create_ssh_host_keys (){
 	/usr/bin/ssh-keygen -t dsa -N "" -f /etc/ssh/ssh_host_dsa_key &&
@@ -234,6 +198,35 @@ systemd_resolved (){
 
 }
 
+create_user () {
+	
+	useradd marty -p 'martymarty'	
+}
+
+wiring_pi () {
+
+	cp -r /home/marty/wiringpi/* /usr/lib/python2.7/site-packages/
+	rm -r /home/marty/wiringpi
+}
+
+openssl_libs () {
+
+	rm /usr/lib/libssl.so
+	rm /usr/lib/libcrypto.so
+	cp /usr/lib/libssl.so.1.0.2 /usr/lib/libssl.so.1.0.0
+	cp /usr/lib/libcrypto.so.1.0.2 /usr/lib/libcrypto.so.1.0.0
+
+	ln -sn /usr/lib/libssl.so /usr/lib/libssl.so.1.0.0
+	ln -sn /usr/lib/libcrypto.so /usr/lib/libcrypto.so.1.0.0
+}
+
+zwarelocal_install (){
+
+	cd /home/marty/zwarelocal-aarch64 
+	./install.sh /home/marty/zwarelocal
+	chown marty:root -R /home/marty/zwarelocal
+}
+
 set_locales_keymaps (){
 	/usr/bin/localectl set-keymap de &&
 	/usr/sbin/usermod -aG sudo marty &&
@@ -243,7 +236,13 @@ set_locales_keymaps (){
 	##PROMPT_COMMAND='echo -e "\e[?16;0;300c"'
 	#/bin/echo $PROMPT_COMMAND >> /home/marty/.bashrc &&
 	/bin/echo '%sudo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+	sleep 2
 
+	chown marty:marty -R /home/marty
+	chown marty:marty -R /home/marty/runtime
+	chown marty:marty -R /home/marty/gpio_service
+	chown marty:marty -R /home/marty/scripts
+	chown marty:root  -R /home/marty/zwarelocal
 }
 
 check_prerequisits() {
@@ -254,7 +253,6 @@ check_prerequisits() {
 
 main() {
 
-	systemd_resolved
 	touch /tmp/firstrun_running
 
 	check_prerequisits
@@ -263,31 +261,22 @@ main() {
 	if [[ "$rootfstype" == "ext4" && ! -f "/root/.no_rootfs_resize" ]]; then
 		do_expand_rootfs
 	fi
+
+	#create_user	
+	systemd_resolved
+	wiring_pi
+	openssl_libs
 	
 	/tmp/create_swap.sh &
 	create_ssh_host_keys
 	set_locales_keymaps
 
-	# old distros can't handle allow-hotplug
-	if [[ "$DISTRIBUTION" == "wheezy" || "$DISTRIBUTION" == "trusty"  ]]; then
-	sed -i "s/allow-hotplug eth0/auto eth0/" /etc/network/interfaces
-	fi
-	
-	# some hardware workarounds
-	case ${LINUXFAMILY} in
-		sun7i|sun8i)
-			adjust_sunxi_settings
-			;;
-		pine64)
-			if [ -z "$(grep ethaddr /boot/uEnv.txt)" ] && [ -f "/sys/class/net/eth0/address" ]; then
-				echo "ethaddr=$(cat /sys/class/net/eth0/address)" >> /boot/uEnv.txt
-			fi
-			;;
-	esac
-
 	update-rc.d -f firstrun remove >/dev/null 2>&1
 	systemctl disable firstrun.service >/dev/null 2>&1
 	rm /tmp/firstrun_running
-} # main
+	#/usr/bin/dialog --infobox "First run : System will reboot ... wait please !" 10 50
+	/bin/systemctl reboot
+	#zwarelocal_install
+} 
 
 main

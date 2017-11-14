@@ -1,6 +1,6 @@
 [Unit]
 Description=LSB: start Z/IP Gateway (zipgateway)
-After=systemd-networkd
+After=network.target
 Conflicts=shutdown.target
 
 [Service]

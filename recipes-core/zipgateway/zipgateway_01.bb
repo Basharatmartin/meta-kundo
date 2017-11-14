@@ -8,65 +8,42 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384
 PR = "r0"
 BRANCH ?= "zipgateway_boni"
 #SRCREV ?= "0b3c2eccbf9863370cd49ca1f6f1cff585146930"
-SRCREV ?= "afb156fb27e55edf4eb5d9126afc5106df1ad3b3"
+#SRCREV ?= "afb156fb27e55edf4eb5d9126afc5106df1ad3b3"
 
-SRC_URI = "git://gitolite@redmine.kundoxt.de:/zipgateway.git;protocol=ssh;branch=${BRANCH}"
+#SRC_URI = "git://gitolite@redmine.kundoxt.de:/zipgateway.git;protocol=ssh;branch=${BRANCH}"
 SRC_URI += "				\
-	   file://zipgateway 		\
-	   file://odroid-bridge 	\
+	   file://zipgateway.tar	\
 	   "
 
-DEPENDS +=" libusb1 openssl python-native "
-RDEPENDS_${PN} ?= "bash"
 
-S = "${WORKDIR}/git/zipgateway-2.61.0-Source/usr/local"
-B = "${WORKDIR}/build/"
-C = "${WORKDIR}/build/_CPack_Packages/Linux/DEB/zipgateway-..0-Linux-aarch64/"
+DEPENDS += "libusb1 openssl python-native"
+RDEPENDS_${PN} ?= "bash useradd"
 
-inherit pkgconfig cmake setuptools
-SYSTEMD_PACKAGES = "zipgateway"
-SYSTEMD_SERVICE_${PN} = "zipgateway.service"
+S = "${WORKDIR}/zipgateway"
 
-INSANE_SKIP_${PN} = "useless-rpaths rpaths"
-
-do_compile(){
-
-	cd ${B}
-	${MAKE}
-	make package
-}
+#INSANE_SKIP_${PN} = ""
 
 do_install(){
 
 	install -dm 0600 ${D}${sysconfdir}/init.d
-	install -dm 0600 ${D}${sysconfdir}/systemd/system
 
 	install -dm 0600 ${D}${bindir}
 	install -dm 0644 ${D}${prefix}/local/sbin
 	install -dm 0644 ${D}${prefix}/local/etc
 	install -dm 0644 ${D}${prefix}/local/man/man3
-	#install -dm 0644 ${D}${prefix}/local/zipgw-scripts
-	#install -dm 0644 ${D}${prefix}/local/zipgw-scripts/ifdown.d
-	#install -dm 0644 ${D}${prefix}/local/zipgw-scripts/ifup.d
 
-	cp -r ${C}/usr/sbin/* ${D}${prefix}/local/sbin
-	cp -r ${C}/usr/etc/* ${D}${prefix}/local/etc/
-	cp -r ${C}/usr/local/man/* ${D}${prefix}/local/man/
-	#cp -r ${C}/etc/* ${D}${sysconfdir}/	
-	cp -r ${WORKDIR}/zipgateway ${D}${sysconfdir}/init.d/	
+	cp -r ${S}/usr/local/sbin/* ${D}${prefix}/local/sbin
+	cp -r ${S}/usr/local/etc/* ${D}${prefix}/local/etc/
+	cp -r ${S}/usr/local/man/* ${D}${prefix}/local/man/
 
-	cp ${WORKDIR}/odroid-bridge/odroid-auto-bridge ${D}${bindir}
+	cp ${S}/etc/init.d/zipgateway ${D}${sysconfdir}/init.d/	
 
-
-	#cp ${WORKDIR}/git/Z-Wave_Odroidc2_Binaries/usr/local/zipgw-scripts/ifup.d/50bridge.sh ${D}${prefix}/local/zipgw-scripts/ifup.d/
-	#cp ${WORKDIR}/git/Z-Wave_Odroidc2_Binaries/usr/local/zipgw-scripts/ifdown.d/50bridge.sh ${D}${prefix}/local/zipgw-scripts/ifdown.d/	
-
-	#	install -m 0644 ${WORKDIR}/zipgateway.service ${D}${sysconfdir}/systemd/system/
+	cp ${S}/usr/bin/odroid-auto-bridge ${D}${bindir}
+	#chown -R marty ${D}${prefix}/local
 }
 
 FILES_${PN} += " \
 		${prefix} 	\
-		${sbindir} 	\
 	       "
 
 

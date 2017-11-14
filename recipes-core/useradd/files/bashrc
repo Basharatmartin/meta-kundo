@@ -2,7 +2,7 @@
 
 #export PS1='\h:\w\$ '
 
-if [ -f /home/marty/runtime_rel/identity ]; then
+if [ -f /home/marty/runtime/identity ]; then
         #export PS1='$USER@$(< /home/marty/runtime_rel/identity):$(pwd)$'
         export PS1='\u@$(< /home/marty/runtime_rel/identity):\w$ '
 else

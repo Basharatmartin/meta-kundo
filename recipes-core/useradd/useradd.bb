@@ -15,7 +15,7 @@ SRC_URI += "file://bashrc \
 
 inherit useradd
 USERADD_PACKAGES = "${PN}"
-GROUPADD_PARAM_${PN} = "-g 880 sudo"
+GROUPADD_PARAM_${PN} = "-g 880 sudo; -g 1200 marty"
 USERADD_PARAM_${PN} = "-u 1200 -G sudo -N -m -d /home/marty -r -s /bin/bash -P 'martymarty' marty"
 
 do_install () {
@@ -23,7 +23,7 @@ do_install () {
         install -d -m 755 ${D}/home/
         install -d -m 755 ${D}/home/marty
 	install -m 775 ${WORKDIR}/bashrc ${D}/home/marty/.bashrc
-	chown -R marty:users ${D}/home/marty
+	chown -R marty:marty ${D}/home/marty
 
 }
 

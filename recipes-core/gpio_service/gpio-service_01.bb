@@ -8,32 +8,27 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384
 PR = "r0"
 
 SRC_URI += "				\
-	   file://gpioRun.py		\
-	   file://misc			\
-	   file://gpio			\
-	   file://gpio.service		\
+	   file://src			\
+	   file://lib			\
 	   "
-
 
 S = "${WORKDIR}"
 
-#INSANE_SKIP_${PN} = "useless-rpaths rpaths"
+#INSANE_SKIP_${PN} = ""
 
 do_install(){
 
 	install -d -m 0600 ${D}/home/marty
 	install -d -m 0600 ${D}/home/marty/gpio_service
 
-	cp ${S}/gpioRun.py ${D}/home/marty/gpio_service
-	cp -r ${S}/gpio ${D}/home/marty/gpio_service/
-	cp -r ${S}/misc ${D}/home/marty/gpio_service/
-
+	cp -r ${S}/src ${D}/home/marty/gpio_service
+	cp -r ${S}/lib ${D}/home/marty/gpio_service/
 }
 
 FILES_${PN} += " \
 		/home/marty/gpio_service 	\
-		/home/marty/gpio_service/gpio 	\
-		/home/marty/gpio_service/misc	\
+		/home/marty/gpio_service/src 	\
+		/home/marty/gpio_service/lib	\
 	       "
 
 

@@ -1,6 +1,7 @@
 [Unit]
 Description=GPIO service
-Wants=mosquitto.service
+Requires=mosquitto.service
+After=mosquitto.service
 Conflicts=shutdown.target
 
 [Service]

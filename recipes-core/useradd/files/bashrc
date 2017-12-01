@@ -3,8 +3,8 @@
 #export PS1='\h:\w\$ '
 
 if [ -f /home/marty/runtime/identity ]; then
-        #export PS1='$USER@$(< /home/marty/runtime_rel/identity):$(pwd)$'
-        export PS1='\u@$(< /home/marty/runtime_rel/identity):\w$ '
+        #export PS1='$USER@$(< /home/marty/runtime/identity):$(pwd)$'
+        export PS1='\u@$(< /home/marty/runtime/identity):\w$ '
 else
         #export PS1='$USER@NO_IDENTITY$:$(pwd)$'
         export PS1='\u@NO_IDENTITY:\w$ '

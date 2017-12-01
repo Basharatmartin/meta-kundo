@@ -36,8 +36,14 @@ do_install(){
 	cp -r ${S}/usr/local/etc/* ${D}${prefix}/local/etc/
 	cp -r ${S}/usr/local/man/* ${D}${prefix}/local/man/
 
+	#install -m 0644 -D ${S}/usr/local/sbin/* ${D}${prefix}/local/sbin
+	#install -m 0644 -D ${S}/usr/local/etc/* ${D}${prefix}/local/etc/
+	#install -m 0644 -D ${S}/usr/local/man/man3/*.* ${D}${prefix}/local/man/man3/
+
+	#install -m 0644  ${S}/etc/init.d/zipgateway ${D}${sysconfdir}/init.d/	
 	cp ${S}/etc/init.d/zipgateway ${D}${sysconfdir}/init.d/	
 
+	#install -m 0666 ${S}/usr/bin/odroid-auto-bridge ${D}${bindir}
 	cp ${S}/usr/bin/odroid-auto-bridge ${D}${bindir}
 	#chown -R marty ${D}${prefix}/local
 }

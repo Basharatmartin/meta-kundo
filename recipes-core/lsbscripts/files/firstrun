@@ -203,6 +203,11 @@ create_user () {
 	useradd marty -p 'martymarty'	
 }
 
+root_password () {
+	
+	 usermod -p `openssl passwd kundo123` root	
+}
+
 wiring_pi () {
 
 	cp -r /home/marty/wiringpi/* /usr/lib/python2.7/site-packages/
@@ -243,6 +248,7 @@ set_locales_keymaps (){
 	chown marty:marty -R /home/marty/gpio_service
 	chown marty:marty -R /home/marty/scripts
 	chown marty:root  -R /home/marty/zwarelocal
+	chown marty:root  -R /usr/local/etc/
 }
 
 check_prerequisits() {
@@ -271,10 +277,11 @@ main() {
 	create_ssh_host_keys
 	set_locales_keymaps
 
+	root_password
+
 	update-rc.d -f firstrun remove >/dev/null 2>&1
 	systemctl disable firstrun.service >/dev/null 2>&1
 	rm /tmp/firstrun_running
-	#/usr/bin/dialog --infobox "First run : System will reboot ... wait please !" 10 50
 	/bin/systemctl reboot
 	#zwarelocal_install
 } 

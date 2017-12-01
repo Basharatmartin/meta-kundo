@@ -1,19 +1,24 @@
 [Unit]
 Description=Mongodb
-After=mosquitto.service network.target
-#Before=basecon.service
-#BindsTo=mosquitto.service
+Requires=network.target
+After=network.target
+Conflicts=shutdown.target
 
 [Service]
 Type=simple
-Restart=on-failure
-RemainAfterExit=yes 
 EnvironmentFile=/etc/mongodb.env
 ExecStartPre=/bin/mkdir -p /var/lib/mongodb
 #ExecStart=/usr/bin/mongod --config /etc/mongodb.conf
 ExecStart=/usr/bin/mongod $DAEMON_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStop=/bin/kill -HUP $MAINPID
+RestartSec=3
+Restart=on-failure
+LimitFSIZE=infinity
+LimitCPU=infinity
+LimitAS=infinity
+LimitNOFILE=64000
+LimitNPROC=64000
 
 [Install]
 WantedBy=multi-user.target

@@ -9,7 +9,8 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384
 
 #SRCREV ?= "dfb96273af151934e16c37e838b529ceeb063987"
 
-TAG ?= "0.9.9.3"
+#TAG ?= "0.9.9.3"
+TAG ?= "0.9.9.5.6"
 SRC_URI = "git://gitolite@redmine.kundoxt.de:/releases_boot.git;protocol=ssh;tag=${TAG}"
 PR = "r0"
 

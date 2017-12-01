@@ -1,5 +1,6 @@
 [Unit]
 Description=LSB: start Z/IP Gateway (zipgateway)
+Requires=network.target
 After=network.target
 Conflicts=shutdown.target
 

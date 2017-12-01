@@ -1,6 +1,7 @@
 [Unit]
 Description=Reference Listener MQTT
-After=zipgateway.service mosquitto.service
+Requires=mosquitto.service
+After=mosquitto.service
 Conflicts=shutdown.target
 
 [Service]

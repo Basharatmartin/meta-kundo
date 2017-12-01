@@ -1,12 +1,15 @@
 [Unit]
 Description=The Marty
-After=mongod.service
+Requires=zware-service.service
+After=zware-service.service
+Conflicts=shutdown.target
 
 [Service]
 User=root
 Group=lock
 WorkingDirectory=/home/marty/runtime
 ExecStart=/usr/bin/java -Dgosh.args=--nointeractive -Djava.library.path=/usr/lib/jni -Dmarty.home.folder=/home/marty/runtime -Dorg.osgi.framework.storage=/home/marty/runtime/felix-cache -jar /home/marty/runtime/marty.jar
+RestartSec=3
 Restart=on-failure
 
 [Install]

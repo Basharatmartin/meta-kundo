@@ -1,5 +1,6 @@
 [Unit]
 Description=LSB: start Zware-Local Service 
+Requires=zipgateway.service
 After=zipgateway.service
 Conflicts=shutdown.target
 

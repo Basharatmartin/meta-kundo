@@ -2,14 +2,18 @@
 Description=LSB: start Z/IP Gateway (zipgateway)
 Requires=network.target
 After=network.target
+Wants=zware-service.service basecon.service
+Before=zware-service.service basecon.service
 Conflicts=shutdown.target
 
 [Service]
 Type=forking
+KillSignal=SIGHUP
+
 ExecStart=/etc/init.d/zipgateway start
 ExecStop=/etc/init.d/zipgateway stop
 RestartSec=3
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

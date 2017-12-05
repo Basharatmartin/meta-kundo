@@ -2,14 +2,17 @@
 Description=LSB: start Zware-Local Service 
 Requires=zipgateway.service
 After=zipgateway.service
+Wants=zipgateway.service basecon.service
+Before=basecon.service
 Conflicts=shutdown.target
 
 [Service]
 Type=forking
+KillSignal=SIGHUP
 ExecStart=/etc/init.d/zware-service start
 ExecStop=/etc/init.d/zware-service stop
 RestartSec=3
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

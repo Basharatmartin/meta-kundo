@@ -2,6 +2,8 @@
 Description=Mosquitto - lightweight server implementation of the MQTT and MQTT-SN protocols
 ConditionPathExists=/etc/mosquitto/mosquitto.conf
 After=network.target
+Wants=gpio.service listener.service basecon.service
+Before=gpio.service listener.service basecon.service
 
 [Service]
 Type=simple
@@ -9,7 +11,9 @@ ExecStartPre=/bin/rm -f /var/run/mosquitto.pid
 ExecStart=/usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
 ExecReload=/bin/kill -HUP $MAINPID
 PIDFile=/var/run/mosquitto.pid
-Restart=on-failure
+RestartSec=3
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
+

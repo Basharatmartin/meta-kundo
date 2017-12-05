@@ -2,13 +2,16 @@
 Description=Reference Listener MQTT
 Requires=mosquitto.service
 After=mosquitto.service
+Wants=mosquitto.service
 Conflicts=shutdown.target
 
 [Service]
 Type=simple
+KillSignal=SIGHUP
 ExecStart=/usr/bin/python /home/marty/scripts/python-zip-listener.py
+ExecStop=/bin/kill -HUP $MAINPID
 RestartSec=3
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

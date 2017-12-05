@@ -2,6 +2,7 @@
 Description=GPIO service
 Requires=mosquitto.service
 After=mosquitto.service
+Wants=mosquitto.service
 Conflicts=shutdown.target
 
 [Service]
@@ -10,7 +11,8 @@ ExecStart=/usr/bin/python /home/marty/gpio_service/src/gpioRun.py
 #ExecReload=/bin/kill -HUP $MAINPID
 ExecStop=/bin/kill -HUP $MAINPID
 RestartSec=3
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
+

@@ -2,6 +2,7 @@
 Description=Mongodb
 Requires=network.target
 After=network.target
+Before=basecon.service
 Conflicts=shutdown.target
 
 [Service]
@@ -13,7 +14,7 @@ ExecStart=/usr/bin/mongod $DAEMON_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStop=/bin/kill -HUP $MAINPID
 RestartSec=3
-Restart=on-failure
+Restart=always
 LimitFSIZE=infinity
 LimitCPU=infinity
 LimitAS=infinity

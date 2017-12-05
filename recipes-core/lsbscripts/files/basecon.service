@@ -1,16 +1,18 @@
 [Unit]
 Description=The Marty
-Requires=zware-service.service
-After=zware-service.service
+Requires=mongod.service mosquitto.service zware-service.service
+Wants=mongod.service mosquitto.service zipgateway.service zware-service.service
+After=mongod.service mosquitto.service zware-service.service
 Conflicts=shutdown.target
 
 [Service]
 User=root
 Group=lock
+KillSignal=SIGHUP
 WorkingDirectory=/home/marty/runtime
 ExecStart=/usr/bin/java -Dgosh.args=--nointeractive -Djava.library.path=/usr/lib/jni -Dmarty.home.folder=/home/marty/runtime -Dorg.osgi.framework.storage=/home/marty/runtime/felix-cache -jar /home/marty/runtime/marty.jar
 RestartSec=3
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

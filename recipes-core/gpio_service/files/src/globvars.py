@@ -1,3 +1,3 @@
-EXITFLAG = False
+exit_flag = False
 
 SOCKETS = []

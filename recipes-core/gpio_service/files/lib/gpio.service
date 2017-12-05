@@ -1,13 +1,13 @@
 [Unit]
 Description=GPIO service
-Wants=mosquitto.service
+Requires=mosquitto.service
+After=mosquitto.service
 Conflicts=shutdown.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python /home/marty/gpio_service/src/gpioRun.py
-#ExecReload=/bin/kill -HUP $MAINPID
-ExecStop=/bin/kill -HUP $MAINPID
+ExecStart=/usr/bin/python /home/marty/gpio_service/src/gpioRun.py start
+#ExecStop=/bin/kill -HUP $MAINPID
 RestartSec=3
 Restart=on-failure
 

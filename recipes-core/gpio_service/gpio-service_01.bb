@@ -22,7 +22,7 @@ do_install(){
 	install -d -m 0600 ${D}/home/marty/gpio_service
 
 	cp -r ${S}/src ${D}/home/marty/gpio_service
-	cp -r ${S}/lib ${D}/home/marty/gpio_service/
+	cp -r ${S}/lib ${D}/home/marty/gpio_service
 }
 
 FILES_${PN} += " \

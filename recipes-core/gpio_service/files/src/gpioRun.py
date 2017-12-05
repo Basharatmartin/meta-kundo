@@ -1,28 +1,35 @@
 #!/usr/bin/env python
 import json, signal, sys, time
-import globvars as g
 from gpioControl import OdroidGpio
+import globvars as g
 
 
 def main(argv):
     try:
+        print ('\ngpio: Starting... GPIO SERVICE')
         with open('/home/marty/gpio_service/lib/gpioControl.conf.json') as json_data:
+            print ('gpio: Opening... config file: ../gpioControl.conf.json')
             config_file = json.load(json_data)
         gpio = OdroidGpio(config_file)
+        print('gpio: starting main Thread')
         gpio.start()
     except (IOError, OSError) as e:
-        print e
+        print(e)
         sys.exit(0)
 
 
-def signal_handler(signal, frame):
-    print('Quit. Closing Threads...')
-    g.EXITFLAG = True
+def graceful_exit(signum, frame):
+    print ('gpio: Quit. Closing Threads with signum {}'.format(signum))
+    g.exit_flag = True
     sys.exit(0)
 
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, signal_handler)
-    main(sys.argv[1:])
+
+    signal.signal(signal.SIGINT, graceful_exit)
+    signal.signal(signal.SIGTERM, graceful_exit)
+
+    main(sys.argv)
+
     while True:
-        time.sleep(0.1)
+        time.sleep(0.5)

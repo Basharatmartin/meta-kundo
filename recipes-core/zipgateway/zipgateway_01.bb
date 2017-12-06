@@ -12,16 +12,15 @@ BRANCH ?= "zipgateway_boni"
 
 #SRC_URI = "git://gitolite@redmine.kundoxt.de:/zipgateway.git;protocol=ssh;branch=${BRANCH}"
 SRC_URI += "				\
-	   file://zipgateway.tar	\
+	   file://zipgateway-01.tar	\
+	   file://odroid-bridge/odroid-auto-bridge	\
 	   "
 
-
 DEPENDS += "libusb1 openssl python-native"
-RDEPENDS_${PN} ?= "bash useradd"
 
-S = "${WORKDIR}/zipgateway"
+S = "${WORKDIR}/zipgateway_ipk"
 
-#INSANE_SKIP_${PN} = ""
+INSANE_SKIP_${PN} = "ldflags"
 
 do_install(){
 
@@ -44,7 +43,8 @@ do_install(){
 	cp ${S}/etc/init.d/zipgateway ${D}${sysconfdir}/init.d/	
 
 	#install -m 0666 ${S}/usr/bin/odroid-auto-bridge ${D}${bindir}
-	cp ${S}/usr/bin/odroid-auto-bridge ${D}${bindir}
+	#cp ${S}/usr/bin/odroid-auto-bridge ${D}${bindir}
+	cp ${WORKDIR}/odroid-bridge/odroid-auto-bridge ${D}${bindir}
 	#chown -R marty ${D}${prefix}/local
 }
 

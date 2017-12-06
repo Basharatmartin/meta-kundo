@@ -5,8 +5,8 @@ Before=network.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/bin/odroid-auto-bridge u
-ExecStop=/usr/bin/odroid-auto-bridge d
+ExecStart=/usr/bin/odroid-auto-bridge up
+ExecStop=/usr/bin/odroid-auto-bridge down
 
 [Install]
 WantedBy=default.target

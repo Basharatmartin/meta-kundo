@@ -1,5 +1,5 @@
 [Unit]
-Description=LSB: start Zware-Local Service 
+Description=LSB:Zware-Local Service 
 Requires=zipgateway.service
 After=zipgateway.service
 Wants=zipgateway.service basecon.service
